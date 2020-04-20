@@ -26,23 +26,37 @@ let current_id = ref 0 ;;
 let initialize (lst: account_spec list): unit =
   database := lst ;;
 
-let acquire_id : id =
-  let input = int_of_string (read_line ()) in
-  current_id := input;
-  input ;;
+let rec acquire_id () : id =
+  Printf.printf "Enter customer id: ";
+  try 
+    let id = int_of_string (read_line ()) in
+    let found = List.hd (List.filter (fun x -> x.id = id) !database) in 
+    current_id := id;
+    found.id
+  with 
+  | Failure _ -> Printf.printf "Invalid id \n";
+                  acquire_id ();;
 
-let acquire_amount : int =
+
+ (*let input = int_of_string (read_line ()) in
+  current_id := input;
+  input ;;*)
+
+let acquire_amount () : int =
   int_of_string (read_line ());;
 
-let acquire_act : action =
+let rec acquire_act () : action =
+  printf "Enter action: (B) Balance (-) Withdraw (+) Deposit (=) Done (X) Exit: %!";
   let str = (read_line ()) in
   match str with
   | "B" -> Balance
-  | "-" -> Withdraw (acquire_amount)
-  | "+" -> Deposit (acquire_amount)
+  | "-" -> Withdraw (acquire_amount ())
+  | "+" -> Deposit (acquire_amount ())
   | "=" -> Next
-  | "X" -> Finished
-  | "" | _ -> raise (Invalid_argument "invalid action") ;;
+  | "x" | "X" -> Finished
+  | "" | _ -> Printf.printf " invalid choice\n";
+              acquire_act ();;
+(*raise (Invalid_argument "invalid action") ;;*)
 
 
 
