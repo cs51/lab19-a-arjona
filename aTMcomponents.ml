@@ -38,12 +38,15 @@ let rec acquire_id () : id =
                   acquire_id ();;
 
 
- (*let input = int_of_string (read_line ()) in
-  current_id := input;
-  input ;;*)
-
-let acquire_amount () : int =
-  int_of_string (read_line ());;
+let rec acquire_amount () : int =
+  Printf.printf "Enter amount: ";
+  try 
+    let amt = int_of_string (read_line ()) in
+    if amt <= 0 then raise (Faliure "amount is non-positive");
+    amt
+  with
+  | Failure _ -> Printf.printf "Invalid amount\n";
+                 acquire_amount ();;
 
 let rec acquire_act () : action =
   Printf.printf "Enter action: (B) Balance (-) Withdraw (+) Deposit (=) Done (X) Exit: %!";
@@ -57,8 +60,6 @@ let rec acquire_act () : action =
   | "" | _ -> Printf.printf " invalid choice\n";
               acquire_act ();;
 (*raise (Invalid_argument "invalid action") ;;*)
-
-
 
 let get_balance (account: id) : int =
   let account_lst = !database in
