@@ -72,8 +72,8 @@ let present_message (msg: string) : unit =
   print_endline msg ;; 
 
 let deliver_cash (c: int) : unit =
-  printf "Here's your cash: ";
+  Printf.printf "Here's your cash: ";
   for _i = 1 to (c / 20) do 
-    printf "[20 @ 20]"
+    Printf.printf "[20 @ 20]"
   done;
-  printf " and %d more\n" (c mod 20) ;;
+  Printf.printf " and %d more\n" (c mod 20) ;;
