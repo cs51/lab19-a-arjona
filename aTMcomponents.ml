@@ -42,7 +42,7 @@ let rec acquire_amount () : int =
   Printf.printf "Enter amount: ";
   try 
     let amt = int_of_string (read_line ()) in
-    if amt <= 0 then raise (Faliure "amount is non-positive");
+    if amt <= 0 then raise (Failure "amount is non-positive");
     amt
   with
   | Failure _ -> Printf.printf "Invalid amount\n";
