@@ -46,7 +46,7 @@ let acquire_amount () : int =
   int_of_string (read_line ());;
 
 let rec acquire_act () : action =
-  printf "Enter action: (B) Balance (-) Withdraw (+) Deposit (=) Done (X) Exit: %!";
+  Printf.printf "Enter action: (B) Balance (-) Withdraw (+) Deposit (=) Done (X) Exit: %!";
   let str = (read_line ()) in
   match str with
   | "B" -> Balance
